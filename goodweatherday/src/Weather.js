@@ -21,7 +21,7 @@ const Weather = () => {
     navigator.geolocation.getCurrentPosition((position) => {
       setCoords({lat : position.coords.latitude,lon : position.coords.longitude});
     });
-    const weatherKey = " your API key" //"328702ee3a024b62e79e63e47dbad4d8"
+    const weatherKey = " your API key" 
     const weatherURL =   `https://api.openweathermap.org/data/3.0/onecall?lat=${coords.lat}&lon=${coords.lon}&appid=${weatherKey}`
                         // Working Weather API Calls:
                         // `https://api.openweathermap.org/data/2.5/weather?lat=${coords.lat}&lon=${coords.lon}&appid=${weatherKey}&units=${units}`
