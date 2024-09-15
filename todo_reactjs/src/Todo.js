@@ -6,15 +6,11 @@ function Todo(){
       const [todos,setTodos] = useState(
         [{id:0,todo:"Study code!"},
           {id:1,todo:"Cook"},
-          {id:2,todo:"Wash clothes"}
+          {id:2,todo:"Exercise"},
+          {id:3,todo:"Eat"}
       ]);
       let nextId = todos.length-1;
-      function addTodo(){
-        
-          setTodos(
-            [ ...todos,{ id: nextId++, todo: todo }]
-          );
-      }
+      
           return(
   
               <>
@@ -23,7 +19,11 @@ function Todo(){
               value={todo}
               onChange={e=>setTodo(e.target.value)}
               />
-              <button onClick={addTodo}>Add</button>
+              <button onClick={()=>{
+              setTodos([ ...todos,{ id: nextId++, todo: todo }]);
+              }}>
+                Add
+              </button>
               <ul>
         {todos.map(td => (
           <li key={td.id}>
@@ -32,15 +32,8 @@ function Todo(){
              
             />
             {td.todo}{' '}
-            <button onClick={() => {
-             
-                  setTodos(
-                todos.filter(t =>
-                  t.id != td.id
-                )
-              );
-              
-              
+            <button onClick={()=>{
+             setTodos(todos.filter(todo =>todo.id !== td.id));
             }}>
               Delete
             </button>
