@@ -15,7 +15,7 @@ function TicTacToe(){
         const [board,setBoard] = useState(init_board);
         const [symbol,setSymbol] = useState("X");
         const [clicked,setClicked] = useState(0);
-        const [toprow_count,setTRCount]=useState(0);
+        const [row1Clicked,setRow1Clicked]=useState(0);
        
        
       //  Code below used to check who the winner! //
@@ -23,28 +23,81 @@ function TicTacToe(){
         board.map(btn=>{if(btn.isClicked === true || clicked === 0){setClicked(clicked + 1);}})
         if(clicked > 7){return true}
         return false;
+}
+     //Apply letter X or O
+     const addSymbol  = ()=>{
+         if(symbol === "X"){setSymbol(!symbol?"X":"O");return symbol}
+        else if(symbol === "O"){setSymbol(!symbol?"O":"X");return symbol}
+                        
     }
-    // function isHorizontalWinner(b){
-    //         if(b.id === 0  && b.btn_Text === "X" ){
-    //             setTRCount(toprow_count + 1);
-    //         }
-    //         else if(b.id === 1  &&  b.btn_Text === "X"){
-    //             setTRCount(toprow_count + 1);
-    //         }
-    //         else if(b.id === 2  &&  b.btn_Text === "X"){
-    //             setTRCount(toprow_count + 1);
-    //         }
-    // }
-    function winner(){
+    function pressed_Button(i){
+        isWinner2(changeBtnText(i));
+        
+    }
+     function changeBtnText(button_Id){
+                const new_Board = board.map((btn,i)=>{
+                    if(i === button_Id && btn.isClicked === false){
+                        return {...btn, btn_Text: addSymbol(),isClicked:true}; 
+                    }else{return btn}
+                });
+                setBoard(new_Board);
+                return new_Board;
+                
+                
+               
+    }
+    function isWinner2(new_Board){
         //Horizontal access
-        board.map(btn => {
-                if(btn.id < 3 && btn.isClicked === false){
-                    //isHorizontalWinner(btn);
-                    setTRCount(toprow_count + 1);
-                    if(toprow_count === 3){
-                        return setWinnerStatement("Winner is player using " + btn.btn_Text)}
-                }
-        }); 
+        let xr1_Clicked = 0;
+        let or1_Clicked = 0;
+        //btn.id === 0 || btn.id === 1 || btn.id === 2 && 
+        new_Board.map((btn,i) => {
+                if(i < 3 && btn.isClicked === true){
+                    if(btn.btn_Text === "X"){
+                        xr1_Clicked = xr1_Clicked+1;
+                        console.log("btn.isClicked === true && btn.btn_Text === 'X': "+btn.btn_Text+" "+btn.isClicked+" id: "+i);
+                    }
+                    if(btn.btn_Text === "O"){
+                        or1_Clicked = or1_Clicked+1;
+                        console.log("btn.isClicked === true && btn.btn_Text === 'O': "+btn.btn_Text+" "+btn.isClicked+" id: "+i);
+                    }
+                    
+                    }
+                    
+                
+               });
+               if(xr1_Clicked === 3){console.log(setWinnerStatement("The winner is: X"));setRow1Clicked(xr1_Clicked);}
+               else if(or1_Clicked === 3){console.log(setWinnerStatement("The winner is: O"));setRow1Clicked(or1_Clicked);}
+
+               
+         
+    }
+    function isWinner(new_Board){
+        //Horizontal access
+        let r1Clicked = 0;
+        new_Board.map((btn,i) => {
+                if(i < 3){
+                    //if(btn.isClicked === false){return}
+                    if(btn.id === 0 && btn.isClicked === true && btn.btn_Text === "X"){
+                        r1Clicked = r1Clicked+1;
+                        console.log("btn.isClicked === true && btn.btn_Text === 'X': "+btn.btn_Text+" "+btn.isClicked+" id: "+i);
+                    }
+                    else if(btn.id === 1 && btn.isClicked === true && btn.btn_Text === "X"){
+                        r1Clicked = r1Clicked+1;
+                        console.log("btn.isClicked === true && btn.btn_Text === 'X': " + btn.btn_Text + " "+  btn.isClicked+  " " + i);
+                    }
+                    else if(btn.id === 2 && btn.isClicked === true && btn.btn_Text === "X"){
+                        r1Clicked = r1Clicked+1;
+                        console.log("btn.isClicked === true && btn.btn_Text === 'X': " + btn.btn_Text + " "+  btn.isClicked+  " " + i);
+                    }
+                    if(r1Clicked === 3){console.log(setWinnerStatement("The winner is: " + btn.btn_Text))}
+                    
+                    }
+                
+               });
+
+               setRow1Clicked(r1Clicked);
+         
     }
             
         
@@ -92,20 +145,7 @@ function TicTacToe(){
            //console.log("Ran display_Winner fxn: " + winnerStatement);
            //return winnerStatement; 
         //}
-     //Apply letter X or O
-     function addSymbol(){
-        if(symbol === "X"){setSymbol(!symbol?"X":"O");return symbol}
-        else if(symbol === "O"){setSymbol(!symbol?"O":"X");return symbol}
-    }
-     function changeBtnText(button_Id){
-                const new_Board = board.map((btn,i)=>{
-                    if(i === button_Id && btn.isClicked === false){
-                        return {...btn, btn_Text: addSymbol(),isClicked:true}; 
-                    }else{return btn}
-                });
-                setBoard(new_Board);
-               
-    }
+    
         
         return(
 
@@ -124,10 +164,11 @@ function TicTacToe(){
                         disabled = {btn.isClicked}
                         id = {"btn"+i}
                         onClick={() => {
-                        changeBtnText(i);
-                        winner(i);
+                        pressed_Button(i);
+                       
                         }}>
                         {btn.btn_Text}
+                        
                         
                     </button>
                 
@@ -136,7 +177,7 @@ function TicTacToe(){
                 
                </ul>
                   
-                {toprow_count}
+                {"Number of isClicked: true, buttons: id: 0-3 with all same symbols: "}{ }{row1Clicked}
                
          
               
