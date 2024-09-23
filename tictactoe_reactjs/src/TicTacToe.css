@@ -10,10 +10,11 @@
   display: flex;
   flex-direction: row;
   align-items:center;
-  margin-left: 25%;
-  margin-right: 25%;
-  height: 100px;
-  /* background-color: #03bb87; */
+  margin-left: 40%;
+  margin-right: 40%;
+  margin-bottom: 0%;
+  margin-top: 0%;
+  
 }
 .btnCol {
   text-align: center;

@@ -14,139 +14,143 @@ function TicTacToe(){
         const [winnerStatement,setWinnerStatement] = useState("Who Won: No Winner Yet!");
         const [board,setBoard] = useState(init_board);
         const [symbol,setSymbol] = useState("X");
-        const [clicked,setClicked] = useState(0);
-        const [row1Clicked,setRow1Clicked]=useState(0);
        
-       
-      //  Code below used to check who the winner! //
-     function isAllClicked(){
-        board.map(btn=>{if(btn.isClicked === true || clicked === 0){setClicked(clicked + 1);}})
-        if(clicked > 7){return true}
-        return false;
-}
-     //Apply letter X or O
+    //Apply letter X or O
      const addSymbol  = ()=>{
          if(symbol === "X"){setSymbol(!symbol?"X":"O");return symbol}
         else if(symbol === "O"){setSymbol(!symbol?"O":"X");return symbol}
                         
     }
-    function pressed_Button(i){
-        isWinner2(changeBtnText(i));
+    function row1_btnPressed(i){
+        isWinner(changeR1BtnText(i));
         
     }
-     function changeBtnText(button_Id){
-                const new_Board = board.map((btn,i)=>{
-                    if(i === button_Id && btn.isClicked === false){
-                        return {...btn, btn_Text: addSymbol(),isClicked:true}; 
-                    }else{return btn}
+    function row2_btnPressed(i){
+        isWinner(changeR2BtnText(i));
+        
+    }
+    // function row3_btnPressed(i){
+    //     isWinnerR3(changeBtnText(i));
+        
+    // }
+     function changeR1BtnText(button_Id){
+
+            const new_Board = board.map((btn,i)=>{
+                if(button_Id < 3 && i === button_Id && btn.isClicked === false){
+                return {...btn, btn_Text: addSymbol(),isClicked:true}; 
+                }else{return btn}
                 });
-                setBoard(new_Board);
-                return new_Board;
-                
-                
-               
-    }
-    function isWinner2(new_Board){
-        //Horizontal access
-        let xr1_Clicked = 0;
-        let or1_Clicked = 0;
-        //btn.id === 0 || btn.id === 1 || btn.id === 2 && 
-        new_Board.map((btn,i) => {
-                if(i < 3 && btn.isClicked === true){
-                    if(btn.btn_Text === "X"){
-                        xr1_Clicked = xr1_Clicked+1;
-                        console.log("btn.isClicked === true && btn.btn_Text === 'X': "+btn.btn_Text+" "+btn.isClicked+" id: "+i);
-                    }
-                    if(btn.btn_Text === "O"){
-                        or1_Clicked = or1_Clicked+1;
-                        console.log("btn.isClicked === true && btn.btn_Text === 'O': "+btn.btn_Text+" "+btn.isClicked+" id: "+i);
-                    }
-                    
-                    }
-                    
-                
-               });
-               if(xr1_Clicked === 3){console.log(setWinnerStatement("The winner is: X"));setRow1Clicked(xr1_Clicked);}
-               else if(or1_Clicked === 3){console.log(setWinnerStatement("The winner is: O"));setRow1Clicked(or1_Clicked);}
+              setBoard(new_Board);
+              return board;
+}
+ function changeR2BtnText(button_Id){
 
-               
-         
-    }
+            const new_Board = board.map((btn,i)=>{
+                if(button_Id > 2 && button_Id < 6 && i === button_Id && btn.isClicked === false){
+                        return {...btn, btn_Text: addSymbol(),isClicked:true}; 
+                }else{return btn}
+                });
+              setBoard(new_Board);
+              return board;
+}
     function isWinner(new_Board){
-        //Horizontal access
-        let r1Clicked = 0;
-        new_Board.map((btn,i) => {
-                if(i < 3){
-                    //if(btn.isClicked === false){return}
-                    if(btn.id === 0 && btn.isClicked === true && btn.btn_Text === "X"){
-                        r1Clicked = r1Clicked+1;
-                        console.log("btn.isClicked === true && btn.btn_Text === 'X': "+btn.btn_Text+" "+btn.isClicked+" id: "+i);
-                    }
-                    else if(btn.id === 1 && btn.isClicked === true && btn.btn_Text === "X"){
-                        r1Clicked = r1Clicked+1;
-                        console.log("btn.isClicked === true && btn.btn_Text === 'X': " + btn.btn_Text + " "+  btn.isClicked+  " " + i);
-                    }
-                    else if(btn.id === 2 && btn.isClicked === true && btn.btn_Text === "X"){
-                        r1Clicked = r1Clicked+1;
-                        console.log("btn.isClicked === true && btn.btn_Text === 'X': " + btn.btn_Text + " "+  btn.isClicked+  " " + i);
-                    }
-                    if(r1Clicked === 3){console.log(setWinnerStatement("The winner is: " + btn.btn_Text))}
-                    
-                    }
-                
-               });
+        //Horizontal variables:rows
+        let xr1 = 0;let xr2 = 0;let xr3 = 0;
+        let or1 = 0;let or2 = 0; let or3 = 0;
+        //Vertical variables: columns
+        let xc1 = 0;let xc2 = 0;let xc3 = 0;
+        let oc1 = 0; let oc2 = 0;let oc3 = 0; 
+        //Diagonal variables: diagnals
+        let xd1 = 0;let xd2 = 0;
+        let od1 = 0;let od2 = 0;
 
-               setRow1Clicked(r1Clicked);
+        new_Board.map((btn,i) => {
+                if(i === 0 && btn.isClicked === true){
+                    if(btn.btn_Text === "X"){
+                        xr1 = xr1+1; xc1 = xc1+1; xd1 = xd1+1;
+                    }
+                    else if(btn.btn_Text === "O"){
+                        or1 = or1+1; oc1 = oc1+1; od1 = od1+1;
+                    }
+                }
+                else if(i === 1 && btn.isClicked === true){
+                     if(btn.btn_Text === "X"){
+                        xr1 = xr1+1; xc2 = xc2+1; 
+                    }
+                    else if(btn.btn_Text === "O"){
+                        or1 = or1+1; oc2 = oc2+1;
+                    }
+                }
+                 else if(i === 2 && btn.isClicked === true){
+                   if(btn.btn_Text === "X"){
+                        xr1 = xr1+1; xc3 = xc3+1; xd2 = xd2+1;
+                    }
+                    else if(btn.btn_Text === "O"){
+                        or1 = or1+1; oc3 = oc3+1; od2 = od2+1;
+                    }
+                }
+                else if(i === 3 && btn.isClicked === true){
+                   if(btn.btn_Text === "X"){
+                        xr2 = xr2+1; xc1 = xc1+1; 
+                    }
+                    else if(btn.btn_Text === "O"){
+                        or2 = or2+1; oc1 = oc1+1;
+                    }
+                }
+                else if(i === 4 && btn.isClicked === true){
+                   if(btn.btn_Text === "X"){
+                        xr2 = xr2+1; xc2 = xc2+1; xd1 = xd1+1; xd2 = xd2+1;
+                    }
+                    else if(btn.btn_Text === "O"){
+                        or2 = or2+1; oc2 = oc2+1; od1 = od1+1; od2 = od2+1;
+                    }
+                }
+                else if(i === 5 && btn.isClicked === true){
+                   if(btn.btn_Text === "X"){
+                        xr2 = xr2+1; xc3 = xc3+1; 
+                    }
+                    else if(btn.btn_Text === "O"){
+                        or2 = or2+1; oc3 = oc3+1;
+                     }
+                }
+                else if(i === 6 && btn.isClicked === true){
+                   if(btn.btn_Text === "X"){
+                       xr3 = xr3+1; xc1 = xc1+1; xd2 = xd2+1;
+                    }
+                    else if(btn.btn_Text === "O"){
+                        or3 = or3+1; oc1 = oc1+1; od2 = od2+1;
+                    }
+                }
+                else if(i === 7 && btn.isClicked === true){
+                   if(btn.btn_Text === "X"){
+                        xr3 = xr3+1; xc2 = xc2+1; 
+                    }
+                    else if(btn.btn_Text === "O"){
+                        or3 = or3+1; oc2 = oc2+1;
+                    }
+                }
+                else if(i === 8 && btn.isClicked === true){
+                   if(btn.btn_Text === "X"){
+                        xr3 = xr3+1; xc3 = xc3+1; xd1 = xd1+1;
+                    }
+                    else if(btn.btn_Text === "O"){
+                        or3 = or3+1; oc3 = oc3+1; od1 = od1+1;
+                    }
+                }
+              });
+              //horizontal winner
+               if(xr1 === 3 || xr2 === 3 || xr3 === 3){console.log(setWinnerStatement("The winner is: X"));}
+               else if(or1 === 3 || or2 === 3 || or3 === 3){console.log(setWinnerStatement("The winner is: O"));}
+              //vertical winner
+              else if(xc1 === 3 || xc2 === 3 || xc3 === 3){console.log(setWinnerStatement("The winner is: X"));}
+              else if(oc1 === 3 || oc2 === 3 || oc3 === 3){console.log(setWinnerStatement("The winner is: O"));}
+              
+               //diagonal winner
+               else if(xd1 === 3 || xd2 === 3){console.log(setWinnerStatement("The winner is: X"));}
+              else if(od1 === 3 || od2 === 3){console.log(setWinnerStatement("The winner is: O"));}
+               
          
     }
-            
-        
-        
-           
-        // if(symbol === "X"){
-        //     //horizontal access 
-        //     if((board[0].btn_Text === symbol)&&(board[1].btn_Text === symbol)&&(board[2].btn_Text === symbol)||
-        //         (board[3].btn_Text === symbol)&&(board[4].btn_Text === symbol)&&(board[5].btn_Text === symbol)||
-        //         (board[6].btn_Text === symbol)&&(board[7].btn_Text === symbol)&&(board[8].btn_Text === symbol)){
-                
-        //     }
-        //     else{setWinnerStatement("Who Won: No Winner Yet!"); return false} 
-        // }
-        // else if(symbol === "O"){
-        //     //horizontal access 
-        //     if((board[0].btn_Text === symbol)&&(board[1].btn_Text === symbol)&&(board[2].btn_Text === symbol)||
-        //         (board[3].btn_Text === symbol)&&(board[4].btn_Text === symbol)&&(board[5].btn_Text === symbol)||
-        //         (board[6].btn_Text === symbol)&&(board[7].btn_Text === symbol)&&(board[8].btn_Text === symbol)){
-        //         setWinnerStatement("Winner is player using " + symbol);
-        //         return true;
-        //     }
-        //     else{setWinnerStatement("Who Won: No Winner Yet!"); return false}
-        
-       
-        
-        
-      
-        
-        // //vertical access
-        // else if(board[0][0] === board[1][0] === board[2][0] ||
-        //     board[0][1] === board[1][1] === board[2][1] ||
-        //     board[0][2] === board[1][2] === board[2][2]
-        // ){  winnerStatement = "Winner is player using " + board[0][0];
-        //     return winnerStatement;
-        // }
-
-        // //diagnal access
-        // else if(board[0][0] === board[1][1] === board[2][2] ||
-        //     board[0][2] === board[1][1] === board[2][0]
-        // ){
-        //     winnerStatement = "Winner is player using " + board[1][1];
-        //     return winnerStatement;
-        // }
-           //console.log("Ran display_Winner fxn: " + winnerStatement);
-           //return winnerStatement; 
-        //}
-    
-        
         return(
 
               <>
@@ -155,16 +159,33 @@ function TicTacToe(){
               </h1>
               <p className="c">
                 <b>{winnerStatement}</b>{ }
-                {clicked}
               </p>
               <ul className="btnRow">
-               {board.map((btn,i)=> (
+               {board.slice(0,3).map((btn,i)=> (
                 <div key={i}>
                     <button 
                         disabled = {btn.isClicked}
                         id = {"btn"+i}
                         onClick={() => {
-                        pressed_Button(i);
+                        row1_btnPressed(i);
+                       
+                        }}>
+                        {btn.btn_Text}
+                        
+                        
+                    </button>
+                    
+                </div> 
+                    ))}
+                </ul> 
+                <ul className="btnRow">
+                 {board.slice(3,6).map((btn,i)=> (
+                <div key={i}>
+                    <button 
+                        disabled = {btn.isClicked}
+                        id = {"btn"+i}
+                        onClick={() => {
+                        row2_btnPressed(i);
                        
                         }}>
                         {btn.btn_Text}
@@ -174,10 +195,29 @@ function TicTacToe(){
                 
                 </div>
                     ))}
+                    </ul>
+                    <ul className="btnRow">
+                 {board.slice(6,9).map((btn,i)=> (
+                <div key={i}>
+                    <button 
+                        disabled = {btn.isClicked}
+                        id = {"btn"+i}
+                        onClick={() => {
+                        // row3_btnPressed(i);
+                       
+                        }}>
+                        {btn.btn_Text}
+                        
+                        
+                    </button>
                 
-               </ul>
+                </div>
+                    ))}
+                </ul>
+                
+              
                   
-                {"Number of isClicked: true, buttons: id: 0-3 with all same symbols: "}{ }{row1Clicked}
+        
                
          
               
