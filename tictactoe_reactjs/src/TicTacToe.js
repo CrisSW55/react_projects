@@ -14,6 +14,7 @@ function TicTacToe(){
         const [winnerStatement,setWinnerStatement] = useState("Who Won: No Winner Yet!");
         const [board,setBoard] = useState(init_board);
         const [symbol,setSymbol] = useState("X");
+        
        
     //Apply letter X or O
      const addSymbol  = ()=>{
@@ -21,39 +22,25 @@ function TicTacToe(){
         else if(symbol === "O"){setSymbol(!symbol?"O":"X");return symbol}
                         
     }
-    function row1_btnPressed(i){
-        isWinner(changeR1BtnText(i));
+    function btnPressed(i){
+        return isWinner(changeBtnText(i));
         
     }
-    function row2_btnPressed(i){
-        isWinner(changeR2BtnText(i));
-        
-    }
-    // function row3_btnPressed(i){
-    //     isWinnerR3(changeBtnText(i));
-        
-    // }
-     function changeR1BtnText(button_Id){
+
+     function changeBtnText(button_Id){
 
             const new_Board = board.map((btn,i)=>{
-                if(button_Id < 3 && i === button_Id && btn.isClicked === false){
+                if(i === button_Id && btn.isClicked === false){
                 return {...btn, btn_Text: addSymbol(),isClicked:true}; 
                 }else{return btn}
                 });
               setBoard(new_Board);
               return board;
 }
- function changeR2BtnText(button_Id){
-
-            const new_Board = board.map((btn,i)=>{
-                if(button_Id > 2 && button_Id < 6 && i === button_Id && btn.isClicked === false){
-                        return {...btn, btn_Text: addSymbol(),isClicked:true}; 
-                }else{return btn}
-                });
-              setBoard(new_Board);
-              return board;
-}
     function isWinner(new_Board){
+        //After 3 counted clicks, either horizontal,vertical, or diagonal,
+        //the winner is declared, based on the symbol X or O
+
         //Horizontal variables:rows
         let xr1 = 0;let xr2 = 0;let xr3 = 0;
         let or1 = 0;let or2 = 0; let or3 = 0;
@@ -138,91 +125,38 @@ function TicTacToe(){
                     }
                 }
               });
-              //horizontal winner
-               if(xr1 === 3 || xr2 === 3 || xr3 === 3){console.log(setWinnerStatement("The winner is: X"));}
-               else if(or1 === 3 || or2 === 3 || or3 === 3){console.log(setWinnerStatement("The winner is: O"));}
-              //vertical winner
-              else if(xc1 === 3 || xc2 === 3 || xc3 === 3){console.log(setWinnerStatement("The winner is: X"));}
-              else if(oc1 === 3 || oc2 === 3 || oc3 === 3){console.log(setWinnerStatement("The winner is: O"));}
-              
-               //diagonal winner
-               else if(xd1 === 3 || xd2 === 3){console.log(setWinnerStatement("The winner is: X"));}
-              else if(od1 === 3 || od2 === 3){console.log(setWinnerStatement("The winner is: O"));}
-               
-         
+              //X winner
+              if(xr1 === 3 || xr2 === 3 || xr3 === 3||xc1 === 3 || xc2 === 3 || xc3 === 3||xd1 === 3 || xd2 === 3){setWinnerStatement("The winner is: X");return winnerStatement;}
+              //O Winner
+              else if(or1 === 3 || or2 === 3 || or3 === 3||oc1 === 3 || oc2 === 3 || oc3 === 3||od1 === 3 || od2 === 3){setWinnerStatement("The winner is: O");return winnerStatement;}
+             return winnerStatement;
     }
+             
         return(
-
               <>
-              <h1 className="c">
-                Tic-Tac-Toe Game!
-              </h1>
-              <p className="c">
-                <b>{winnerStatement}</b>{ }
-              </p>
-              <ul className="btnRow">
-               {board.slice(0,3).map((btn,i)=> (
+             
+              
+              <div className="col">
+              <h1 >Tic-Tac-Toe Game!</h1>
+              <p ><b>{winnerStatement}</b>{ }</p>
+              </div>
+             
+              <ul className="grid-container">
+               {board.map((btn,i)=> (
                 <div key={i}>
-                    <button 
+                 <button 
                         disabled = {btn.isClicked}
                         id = {"btn"+i}
                         onClick={() => {
-                        row1_btnPressed(i);
-                       
-                        }}>
+                        btnPressed(i);
+                        }} >
                         {btn.btn_Text}
-                        
-                        
                     </button>
-                    
-                </div> 
+                </div>
                     ))}
                 </ul> 
-                <ul className="btnRow">
-                 {board.slice(3,6).map((btn,i)=> (
-                <div key={i}>
-                    <button 
-                        disabled = {btn.isClicked}
-                        id = {"btn"+i}
-                        onClick={() => {
-                        row2_btnPressed(i);
-                       
-                        }}>
-                        {btn.btn_Text}
-                        
-                        
-                    </button>
-                
-                </div>
-                    ))}
-                    </ul>
-                    <ul className="btnRow">
-                 {board.slice(6,9).map((btn,i)=> (
-                <div key={i}>
-                    <button 
-                        disabled = {btn.isClicked}
-                        id = {"btn"+i}
-                        onClick={() => {
-                        // row3_btnPressed(i);
-                       
-                        }}>
-                        {btn.btn_Text}
-                        
-                        
-                    </button>
-                
-                </div>
-                    ))}
-                </ul>
-                
               
-                  
-        
-               
-         
-              
-
-              </>
+            </>
           );
 
 

@@ -1,27 +1,29 @@
-.c {
+.col {
   text-align: center;
   display: flex;
   flex-direction: column;
   align-items:center;
-
-}
-.btnRow {
-  text-align: center;
-  display: flex;
-  flex-direction: row;
-  align-items:center;
-  margin-left: 40%;
-  margin-right: 40%;
-  margin-bottom: 0%;
-  margin-top: 0%;
   
 }
-.btnCol {
-  text-align: center;
-  display: flex;
-  flex-direction: column;
-  align-items:center;
+.grid-container {
+  display: grid;
+  grid-template-columns: 50px 50px 50px;
+  grid-template-rows: 50px 50px 50px;
+  /* grid-gap: 1px; */
+  /* padding: 10px; */
+  margin-left: 40%;
+  margin-right: 40%;
+
+  
 }
+
+.grid-container > div {
+  text-align: center;
+  padding: 20px 0;
+  font-size: 30px;
+ 
+}
+
 /* 
   All the initialized buttons' styling:
   width =  50px, height = 50px, and backgroud-color:#03bb87 
@@ -31,57 +33,4 @@
   height:50px;
   background-color:#03bb87;
 }
-/* #btn0{
-  width: 50px;
-  height:50px;
-  background-color: crimson;
 
-}
-#btn1{
-  width: 50px;
-  height:50px;
-  background-color: crimson;
-
-}
-#btn2{
-  width: 50px;
-  height:50px;
-  background-color:"#03bb87";
-
-}
-#btn3{
-  width: 50px;
-  height:50px;
-  background-color:"#03bb87";
-
-}
-#btn4{
-  width: 50px;
-  height:50px;
-  background-color:"#03bb87";
-
-}
-#btn5{
-  width: 50px;
-  height:50px;
-  background-color:"#03bb87";
-
-}
-#btn6{
-  width: 50px;
-  height:50px;
-  background-color:"#03bb87";
-
-}
-#btn7{
-  width: 50px;
-  height:50px;
-  background-color:"#03bb87";
-
-}
-#btn8{
-  width: 50px;
-  height:50px;
-  background-color:"#03bb87";
-
-} */
